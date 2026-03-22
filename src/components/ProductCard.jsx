@@ -2,45 +2,62 @@ import { useCart } from "../context/CartContext";
 import { useWishlist } from "../context/WishlistContext";
 import { useNavigate } from "react-router-dom";
 
+const BASE_URL = "https://react-ecommerce-backend-1.onrender.com";
+
 function ProductCard({ product }) {
   const { addToCart } = useCart();
   const { wishlistItems, toggleWishlist } = useWishlist();
   const navigate = useNavigate();
 
-  const isInWishlist = wishlistItems.some(item => item.id === product.id);
+  const isInWishlist = wishlistItems.some(
+    item => item.id === product.id
+  );
 
-  // ✅ Handle wishlist + cart + navigation
+  // Toggle wishlist + add to cart + go to cart
   const handleWishlistClick = () => {
-    toggleWishlist(product); // toggle wishlist
-    addToCart(product);      // add to cart
-    navigate("/cart");       // go to cart page
+    toggleWishlist(product);
+    addToCart(product);
+    navigate("/cart");
+  };
+
+  // Add to cart only
+  const handleAddToCart = () => {
+    addToCart(product);
   };
 
   return (
     <div className="col-md-4 mb-4">
       <div className="card h-100 shadow-sm text-center p-3 position-relative bg-white text-dark">
 
-        {/* ❤️ Wishlist / Add to Cart button */}
+        {/* ❤️ Wishlist Button */}
         <button
           className={`btn position-absolute top-0 end-0 m-2 ${
             isInWishlist ? "btn-danger" : "btn-outline-danger"
           }`}
-          onClick={handleWishlistClick} // ✅ updated
+          onClick={handleWishlistClick}
         >
           {isInWishlist ? "❤️" : "🤍"}
         </button>
 
+        {/* 📸 Product Image */}
         <img
-          src={`http://localhost:5000${product.image}`}
+          src={`${BASE_URL}${product.image}`}
           className="card-img-top product-img mb-2"
           alt={product.name}
-          onError={(e) => { e.target.src = "https://via.placeholder.com/200"; }}
+          onError={(e) => {
+            e.target.src = "https://via.placeholder.com/200";
+          }}
         />
 
+        {/* 📝 Product Name */}
         <h5 className="card-title text-dark">{product.name}</h5>
 
+        {/* 💰 Price */}
         <p>
-          <span className="text-danger fw-bold">${product.price}</span>
+          <span className="text-danger fw-bold">
+            ${product.price}
+          </span>
+
           {product.oldPrice && (
             <span className="text-muted text-decoration-line-through ms-2">
               ${product.oldPrice}
@@ -48,11 +65,13 @@ function ProductCard({ product }) {
           )}
         </p>
 
+        {/* ⭐ Rating */}
         <p className="text-dark">⭐ {product.rating}</p>
 
+        {/* 🛒 Add to Cart */}
         <button
           className="btn btn-primary w-100"
-          onClick={() => addToCart(product)}
+          onClick={handleAddToCart}
         >
           Add to Cart
         </button>
