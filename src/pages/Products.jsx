@@ -1,14 +1,15 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import ProductCard from "../components/ProductCard";
+
+const BASE_URL = "https://react-ecommerce-backend-1.onrender.com";
 
 function Products() {
   const [products, setProducts] = useState([]);
 
   useEffect(() => {
-    fetch("http://localhost:5000/api/products")
+    fetch(`${BASE_URL}/api/products`)
       .then((res) => res.json())
       .then((apiProducts) => {
-        // ⭐ FIX: Use backend image URLs directly
         setProducts(apiProducts);
       })
       .catch((err) => console.error("Product API Error:", err));
@@ -27,7 +28,9 @@ function Products() {
               <ProductCard key={product.id} product={product} />
             ))
           ) : (
-            <h4 className="text-white text-center">Loading products...</h4>
+            <h4 className="text-white text-center">
+              Loading products...
+            </h4>
           )}
         </div>
       </div>
