@@ -1,0 +1,303 @@
+body {
+  background: #f5f5f5;
+}
+
+/* ================= PRODUCT CARD ================= */
+
+.product-background::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6); /* adjust darkness here */
+  z-index: 0;
+}
+
+.product-background .container {
+  position: relative;
+  z-index: 1;
+}
+
+.transparent-card {
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 12px;
+  backdrop-filter: blur(10px);
+}
+
+/* Transparent glass card */
+.card{
+  background: rgba(255,255,255,0.12);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255,255,255,0.3);
+  color: white;
+  transition: 0.3s;
+}
+
+.card:hover{
+  transform: translateY(-5px);
+  box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+}
+
+/* Text inside card */
+.card h5,
+.card p{
+  color:white;
+}
+
+.product-img {
+  height: 200px;
+  object-fit: cover;
+}
+
+/* ================= NAVBAR ================= */
+
+.navbar {
+  min-height: 50px;
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+.navbar-logo{
+  height:50px;
+  width:auto;
+  object-fit:contain;
+}
+
+/* ================= GRID ================= */
+
+.row > .col {
+  margin-bottom: 20px;
+}
+
+/* ================= FORM ================= */
+
+.form-control:focus {
+  border-color: #0d6efd;
+  box-shadow: 0 0 5px rgba(13, 110, 253, 0.5);
+}
+
+/* ================= BUTTON ================= */
+
+.btn-primary:hover {
+  background-color: #0b5ed7;
+  transform: translateY(-2px);
+}
+
+/* ================= ANIMATION ================= */
+
+@keyframes fadeIn {
+  0% { opacity: 0; transform: translateY(30px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+.animate-fade-in { 
+  animation: fadeIn 1s forwards; 
+}
+
+.delay-1s { 
+  animation-delay: 0.5s; 
+}
+
+/* ================= TEXT ================= */
+
+.text-shadow {
+  text-shadow: 2px 2px 6px rgba(0,0,0,0.6);
+}
+
+.carousel-caption h1,
+.carousel-caption p {
+  color: #a79380; /* bronze/gold */
+}
+
+/* ================= PRODUCT IMAGE ================= */
+
+.circular-img {
+  width: 200px;       
+  height: 200px;
+  object-fit: cover;
+  border-radius: 50%;
+  margin: 0 auto;
+  border: 3px solid #0d6efd; 
+}
+
+/* ================= CAROUSEL ================= */
+
+.carousel-caption {
+  padding: 1rem 2rem;
+  border-radius: 8px;
+  background: none;
+}
+
+/* ================= CART PAGE ================= */
+
+.cart-page {
+  min-height: 100vh;
+  background-color: #1a1a1a;
+  padding-bottom: 50px;
+  position: relative;
+}
+
+.cart-row {
+  position: relative;
+  border-radius: 10px;
+  margin-bottom: 15px;
+}
+
+/* Overlay for text readability */
+.product-overlay {
+  background-color: rgba(0, 0, 0, 0.6);
+  border-radius: 5px;
+  display: inline-block;
+  padding: 5px 10px;
+}
+
+/* Custom Quantity Selector */
+.cart-quantity {
+  display: flex;
+  align-items: center;
+}
+
+.cart-quantity button {
+  width: 30px;
+  height: 30px;
+  padding: 0;
+  font-weight: bold;
+  border-radius: 5px;
+}
+
+.cart-quantity span {
+  min-width: 30px;
+  text-align: center;
+  display: inline-block;
+  margin: 0 5px;
+  font-weight: bold;
+}
+
+/* Checkout Button */
+.btn-lg.btn-success {
+  border-radius: 5px;
+  font-size: 18px;
+  padding: 10px 25px;
+  transition: all 0.2s ease-in-out;
+}
+
+.btn-lg.btn-success:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(255, 255, 255, 0.2);
+}
+
+/* Responsive Table */
+.table-responsive {
+  overflow-x: auto;
+}
+
+
+/* Home background */
+
+.home-background{
+  background-image: url("../assets/images/mainbg.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+/* Transparent product boxes */
+
+.transparent-card{
+  background: rgba(255,255,255,0.15);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255,255,255,0.3);
+  color: white;
+}
+
+.transparent-card h5,
+.transparent-card p{
+  color:white;
+}
+
+/* Full page background */
+.contact-background {
+  background-image: url("../assets/images/contactbg.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  min-height: 200vh;
+  padding-top: 100px;
+}
+
+/* Transparent card effect */
+.transparent-card {
+  background: rgba(255, 255, 255, 0.12);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  color: white;
+  transition: 0.3s;
+}
+
+.transparent-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+}
+
+/* Ensure text is white */
+.transparent-card h4,
+.transparent-card p,
+.transparent-card label {
+  color: rgb(0, 0, 0);
+}
+
+/* Inputs styling */
+.contact-card input,
+.contact-card textarea {
+  background: rgba(0, 0, 0, 0.1);
+  color: rgb(0, 0, 0);
+  border: 1px solid rgba(0, 0, 0, 0.3);
+}
+
+.contact-card input:focus,
+.contact-card textarea:focus {
+  border-color: #000000;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+  outline: none;
+}
+
+/* === CART PAGE BACKGROUND === */
+
+.cart-card {
+  display: flex;
+  background: rgba(0, 0, 0, 0.6);
+  border-radius: 10px;
+  overflow: hidden;
+  align-items: center;
+}
+
+.cart-card-img img {
+  width: 150px;
+  height: 150px;
+  object-fit: cover;
+  border-radius: 10px 0 0 10px;
+}
+
+.cart-card-overlay {
+  flex: 1;
+  padding-left: 20px;
+}
+
+.cart-quantity {
+  display: flex;
+  align-items: center;
+}
+
+.cart-quantity button {
+  width: 30px;
+  height: 30px;
+  font-weight: bold;
+  border-radius: 5px;
+}
+
+.cart-quantity span {
+  min-width: 30px;
+  text-align: center;
+  margin: 0 5px;
+  color: white;
+  font-weight: bold;
+}
