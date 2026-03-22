@@ -1,40 +1,43 @@
 import { useState, useEffect } from "react";
 import ProductCard from "../components/ProductCard";
 
+const BASE_URL = "https://react-ecommerce-backend-1.onrender.com";
+
 function ProductList({ search }) {
   const [products, setProducts] = useState([]);
   const [category, setCategory] = useState("all");
   const [sort, setSort] = useState("");
 
   useEffect(() => {
-    fetch("http://localhost:5000/api/products")
+    fetch(`${BASE_URL}/api/products`)
       .then(res => res.json())
       .then(data => setProducts(data))
-      .catch(error => console.error(error));
+      .catch(error => console.error("Fetch Error:", error));
   }, []);
 
-  // ✅ FIXED SEARCH (name + category)
+  // 🔍 SEARCH (name + category)
   let filteredProducts = products.filter(product =>
     product.name.toLowerCase().includes(search.toLowerCase()) ||
     product.category.toLowerCase().includes(search.toLowerCase())
   );
 
-  // CATEGORY FILTER
+  // 📂 CATEGORY FILTER
   if (category !== "all") {
     filteredProducts = filteredProducts.filter(
       product => product.category === category
     );
   }
 
-  // SORT
+  // 🔃 SORT
   if (sort === "priceLowHigh") {
-    filteredProducts.sort((a, b) => a.price - b.price);
+    filteredProducts = [...filteredProducts].sort((a, b) => a.price - b.price);
   } else if (sort === "priceHighLow") {
-    filteredProducts.sort((a, b) => b.price - a.price);
+    filteredProducts = [...filteredProducts].sort((a, b) => b.price - a.price);
   } else if (sort === "rating") {
-    filteredProducts.sort((a, b) => b.rating - a.rating);
+    filteredProducts = [...filteredProducts].sort((a, b) => b.rating - a.rating);
   }
 
+  // 📂 Unique categories
   const categories = ["all", ...new Set(products.map(p => p.category))];
 
   return (
@@ -48,6 +51,7 @@ function ProductList({ search }) {
         {/* FILTER BAR */}
         <div className="row mb-4 g-2">
 
+          {/* Category */}
           <div className="col-md-4">
             <select
               className="form-select"
@@ -62,6 +66,7 @@ function ProductList({ search }) {
             </select>
           </div>
 
+          {/* Sort */}
           <div className="col-md-4">
             <select
               className="form-select"
@@ -75,6 +80,7 @@ function ProductList({ search }) {
             </select>
           </div>
 
+          {/* Reset */}
           <div className="col-md-4">
             <button
               className="btn btn-light w-100"
