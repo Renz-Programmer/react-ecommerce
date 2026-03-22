@@ -5,9 +5,13 @@ import { VitePWA } from "vite-plugin-pwa";
 export default defineConfig({
   plugins: [
     react(),
+
     VitePWA({
       registerType: "autoUpdate",
+
+      // ✅ Let Vite handle CSS/JS asset selection automatically
       includeAssets: ["favicon.ico", "icon-192.png", "icon-512.png"],
+
       manifest: {
         name: "League Merch Store",
         short_name: "Merch Store",
@@ -17,40 +21,51 @@ export default defineConfig({
         display: "standalone",
         icons: [
           { src: "icon-192.png", sizes: "192x192", type: "image/png" },
-          { src: "icon-512.png", sizes: "512x512", type: "image/png" },
-        ],
+          { src: "icon-512.png", sizes: "512x512", type: "image/png" }
+        ]
       },
+
+      // ✅ FIXED — no globPatterns that break CSS
       workbox: {
-        maximumFileSizeToCacheInBytes: 60000000,
-        globPatterns: ["**/*.{js,css,html,ico,png,svg,jpg,jpeg,gif}"],
+        maximumFileSizeToCacheInBytes: 60 * 1024 * 1024,
+
+        // ✅ Only cache API calls — NO CSS/JS interception
         runtimeCaching: [
           {
-            urlPattern: new RegExp(`${process.env.VITE_API_URL}/api/.*`),
+            urlPattern: ({ url }) =>
+              url.href.startsWith(`${import.meta.env.VITE_API_URL}/api`),
             handler: "NetworkFirst",
             options: {
               cacheName: "api-cache",
-              expiration: { maxEntries: 50, maxAgeSeconds: 86400 },
-            },
+              expiration: { maxEntries: 50, maxAgeSeconds: 86400 }
+            }
           },
+
+          // ✅ Cache backend images safely
           {
-            urlPattern: new RegExp(`${process.env.VITE_API_URL}/images/.*`),
-            handler: "NetworkFirst",
+            urlPattern: ({ url }) =>
+              url.href.startsWith(`${import.meta.env.VITE_API_URL}/images`),
+            handler: "CacheFirst",
             options: {
               cacheName: "backend-images",
-              expiration: { maxEntries: 50, maxAgeSeconds: 60*60*24*30 },
-            },
+              expiration: { maxEntries: 50, maxAgeSeconds: 60 * 60 * 24 * 30 }
+            }
           },
+
+          // ✅ Cache frontend images (safe + optional)
           {
-            urlPattern: /\.(?:png|jpg|jpeg|svg|gif)$/,
+            urlPattern: /\.(png|jpg|jpeg|svg|gif)$/,
             handler: "CacheFirst",
             options: {
               cacheName: "frontend-images",
-              expiration: { maxEntries: 100, maxAgeSeconds: 60*60*24*30 },
-            },
-          },
-        ],
-      },
-    }),
+              expiration: { maxEntries: 100, maxAgeSeconds: 60 * 60 * 24 * 30 }
+            }
+          }
+        ]
+      }
+    })
   ],
-  base: "/",
+
+  // ✅ Vercel needs this exact setting
+  base: "/"
 });
